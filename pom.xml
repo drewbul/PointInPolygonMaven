@@ -12,6 +12,26 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+<!--    Uncomment these lines if you want to compile the poject for openjfx11-->
+    <!--    <dependencies>-->
+    <!--        <dependency>-->
+    <!--            <groupId>org.openjfx</groupId>-->
+    <!--            <artifactId>javafx-controls</artifactId>-->
+    <!--            <version>11.0.2</version>-->
+    <!--        </dependency>-->
+    <!--        <dependency>-->
+    <!--            <groupId>org.openjfx</groupId>-->
+    <!--            <artifactId>javafx-media</artifactId>-->
+    <!--            <version>11.0.2</version>-->
+    <!--        </dependency>-->
+    <!--        <dependency>-->
+    <!--            <groupId>org.openjfx</groupId>-->
+    <!--            <artifactId>javafx-fxml</artifactId>-->
+    <!--            <version>11.0.2</version>-->
+    <!--        </dependency>-->
+    <!--    </dependencies>-->
+
     <build>
         <plugins>
             <plugin>
@@ -27,6 +47,22 @@
                             <mainClass>ate.Main</mainClass>
                         </manifest>
                     </archive>
+                </configuration>
+            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-compiler-plugin</artifactId>-->
+<!--                <version>3.8.1</version>-->
+<!--                <configuration>-->
+<!--                    <release>11</release>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.3</version>
+                <configuration>
+                    <mainClass>ate.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>
