@@ -52,7 +52,8 @@ public class MainController {
 //    private Button butNewPolygon;
 
     private boolean ifTestingPointsNow;
-    private static int prevSelectedVertex=-1;
+    final static int LIST_ITEM_NOT_SELECTED=-1;
+    private static int prevSelectedVertex=LIST_ITEM_NOT_SELECTED;
     private final Point prevVertex = new Point();
     private final ArrayList<Point> vertices = new ArrayList<>();
     private final ObservableList<String> vertCoords = FXCollections.observableArrayList();
@@ -81,8 +82,16 @@ public class MainController {
         vertCoordListView.setPrefSize(110, screenHeight - vertCoordListView.getLayoutY() - WINDOW_TITLE_BAR_HEIGHT);
         drawingPane.setPrefSize(screenWidth - drawingPane.getLayoutX() - 5, screenHeight - drawingPane.getLayoutY() - WINDOW_TITLE_BAR_HEIGHT);
         vertCoordListView.setItems(vertCoords);
+        Main.myVoice.setLang("English");
         msgSoundFilesNotLoaded.setVisible(Main.myVoice.skipVoice);
-        langCombobox.setVisible(!Main.myVoice.skipVoice);
+        langCombobox.setPrefHeight(Main.myVoice.skipVoice ? 25 : 50);
+    }
+
+    @FXML
+    private void langComboboxOnAction(ActionEvent event){
+        Main.myVoice.setLang(langCombobox.getValue());
+        msgSoundFilesNotLoaded.setVisible(Main.myVoice.skipVoice);
+        langCombobox.setPrefHeight(Main.myVoice.skipVoice ? 25 : 50);
     }
 
     @FXML
@@ -90,14 +99,14 @@ public class MainController {
     {
         int selectedVertIndex = vertCoordListView.getSelectionModel().getSelectedIndex();
         Circle selectedVertex;
-        if (selectedVertIndex!=-1) {    // if the list is not empty
+        if (selectedVertIndex != LIST_ITEM_NOT_SELECTED) {
             if (selectedVertIndex != prevSelectedVertex) { // if a new item in the list has been selected
                 lblMessage.setText("Click on the selected coordinates again to remove the selection");
                 selectedVertex = (Circle) polygonVertices.getChildren().get(selectedVertIndex);
                 selectedVertex.setFill(Color.ORANGE);
                 selectedVertex.setRadius(4.0f);
             }
-            if (prevSelectedVertex != -1) { //skip deselecting if -1
+            if (prevSelectedVertex != LIST_ITEM_NOT_SELECTED) {
                 if (selectedVertIndex == prevSelectedVertex) { //if no new vertex has been selected
                     lblMessage.setText("Selection removed");
                 }
@@ -107,34 +116,34 @@ public class MainController {
             }
             prevSelectedVertex = selectedVertIndex;
         }
-}
+    }
 
     @FXML
-        private void btnFinishSettingOnAction(ActionEvent event){
-            if ( vertices.size()>=3 ) {
-                if (!ifTestingPointsNow){
-                    Line polygonSide = new Line (prevVertex.x, prevVertex.y, vertices.get(0).x, vertices.get(0).y);
-                    polygonSide.setFill(Color.BLACK);
-                    polygonSides.getChildren().add(polygonSide);
-                    ifTestingPointsNow = true;
-                    helperLine.setActive(false);
-                }
-                lblMessage.setText("Now you can specify the point to be tested." );
-            } else {
-                lblMessage.setText("Please set 3 vertices or more." );
+    private void btnFinishSettingOnAction(ActionEvent event){
+        if ( vertices.size()>=3 ) {
+            if (!ifTestingPointsNow){
+                Line polygonSide = new Line (prevVertex.x, prevVertex.y, vertices.get(0).x, vertices.get(0).y);
+                polygonSide.setFill(Color.BLACK);
+                polygonSides.getChildren().add(polygonSide);
+                ifTestingPointsNow = true;
+                helperLine.setActive(false);
             }
+            lblMessage.setText("Now you can specify the point to be tested." );
+        } else {
+            lblMessage.setText("Please set 3 vertices or more." );
+        }
     }
 
     @FXML
     private void butNewPolygonOnAction(ActionEvent event){
         lblMessage.setText("Set the vertices of the polygon with mouse clicks. Use 'Finish setting' button to close the polygon.");
-            ifTestingPointsNow = false;
-            polygonVertices.getChildren().clear();
-            polygonSides.getChildren().clear();
-            vertices.clear();
-            testedPointCircle.setVisible(false);
-            vertCoords.clear();
-            helperLine.setActive(false);
+        ifTestingPointsNow = false;
+        polygonVertices.getChildren().clear();
+        polygonSides.getChildren().clear();
+        vertices.clear();
+        testedPointCircle.setVisible(false);
+        vertCoords.clear();
+        helperLine.setActive(false);
     }
 
     @FXML
@@ -169,8 +178,7 @@ public class MainController {
             testedPointCircle.setCenterY(clickedPoint.y);
             testedPointCircle.setVisible(true);
             boolean isInside = isPointInPolygon(vertices, clickedPoint);
-            String curLang = langCombobox.getValue();
-            Main.myVoice.play(isInside, curLang);
+            Main.myVoice.play(isInside);
             testedPointCircle.setFill(isInside ? Color.FORESTGREEN : Color.RED);
             lblMessage.setText("The point " + pointCoordinates + " is " + (isInside ? "inside" : "outside") + " the polygon." );
         }

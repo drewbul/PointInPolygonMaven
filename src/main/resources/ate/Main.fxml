@@ -14,9 +14,9 @@
 
     <Label fx:id="lblMouseCoordinates" layoutX="25" layoutY="10"/>
 
-    <Label fx:id="msgSoundFilesNotLoaded" layoutX="120" layoutY="10" text="Sound files not loaded" style="-fx-background-color:#FFFF8C;" visible="false" />
+    <Label fx:id="msgSoundFilesNotLoaded" layoutX="5" layoutY="70" text="Sound not loaded" prefWidth="110" style="-fx-background-color:#FFFF8C;" alignment="CENTER" visible="false" />
 
-    <ComboBox fx:id="langCombobox" layoutX="120" layoutY="5">
+    <ComboBox fx:id="langCombobox" layoutX="5" layoutY="35" prefWidth="110" prefHeight="50" onAction="#langComboboxOnAction">
         <items>
             <FXCollections fx:factory="observableArrayList">
                 <String fx:value="English" />
@@ -28,13 +28,13 @@
         </value>
     </ComboBox>
 
-    <Label fx:id="lblMessage" layoutX="245" layoutY="10"
+    <Label fx:id="lblMessage" layoutX="120" layoutY="10"
            text="Set the vertices of the polygon with mouse clicks. Use 'Finish setting' button to close the polygon."/>
-    <Button fx:id="btnFinishSetting" layoutX="5" layoutY="35" text="Finish setting"
+    <Button fx:id="btnFinishSetting" layoutX="5" layoutY="95" text="Finish setting"
             style="-fx-background-color:#28b7ff;" prefWidth="110" prefHeight="50" onAction="#btnFinishSettingOnAction"/>
-    <Button fx:id="btnNewPolygon" layoutX="5" layoutY="95" text="New polygon" style="-fx-background-color:#aaffaa;"
+    <Button fx:id="btnNewPolygon" layoutX="5" layoutY="155" text="New polygon" style="-fx-background-color:#aaffaa;"
             prefWidth="110" prefHeight="50" onAction="#butNewPolygonOnAction"/>
-    <ListView fx:id="vertCoordListView" layoutX="5" layoutY="155" style="-fx-background-color:#f2f2f2;"
+    <ListView fx:id="vertCoordListView" layoutX="5" layoutY="215" style="-fx-background-color:#f2f2f2;"
               onMouseClicked="#vertCoordListViewOnMouseClicked"/>
     <Pane fx:id="drawingPane" layoutX="120" layoutY="35" style="-fx-background-color:#fafafa;"
           onMouseClicked="#drawingPaneOnClick" onMouseMoved="#drawingPaneOnMouseMoveOrDrag" onMouseDragged="#drawingPaneOnMouseMoveOrDrag" onMouseExited="#drawingPaneOnMouseExited" onMouseEntered="#drawingPaneOnMouseEntered">
