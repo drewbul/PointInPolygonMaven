@@ -43,6 +43,7 @@ class Voice {
         boolean ifUseWav = parameterList.size()>=1 && parameterList.get(0).equals("wav");
 
         warningPopup.setTitle("Sound files alert");
+        warningPopup.getDialogPane().setMinWidth(700);
         extension = ifUseMP3 ? "mp3" : "wav";
         if (!ifUseMP3 && !ifUseWav){
             warningPopup.setHeaderText("Extension of sound files not specified");

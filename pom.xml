@@ -14,23 +14,23 @@
     </properties>
 
 <!--    Uncomment these lines if you want to compile the poject for openjfx11-->
-    <!--    <dependencies>-->
-    <!--        <dependency>-->
-    <!--            <groupId>org.openjfx</groupId>-->
-    <!--            <artifactId>javafx-controls</artifactId>-->
-    <!--            <version>11.0.2</version>-->
-    <!--        </dependency>-->
-    <!--        <dependency>-->
-    <!--            <groupId>org.openjfx</groupId>-->
-    <!--            <artifactId>javafx-media</artifactId>-->
-    <!--            <version>11.0.2</version>-->
-    <!--        </dependency>-->
-    <!--        <dependency>-->
-    <!--            <groupId>org.openjfx</groupId>-->
-    <!--            <artifactId>javafx-fxml</artifactId>-->
-    <!--            <version>11.0.2</version>-->
-    <!--        </dependency>-->
-    <!--    </dependencies>-->
+        <dependencies>
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-controls</artifactId>
+                <version>11.0.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-media</artifactId>
+                <version>11.0.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-fxml</artifactId>
+                <version>11.0.2</version>
+            </dependency>
+        </dependencies>
 
     <build>
         <plugins>
@@ -50,14 +50,15 @@
                 </configuration>
             </plugin>
 
-<!--            <plugin>-->
-<!--                <groupId>org.openjfx</groupId>-->
-<!--                <artifactId>javafx-maven-plugin</artifactId>-->
-<!--                <version>0.0.3</version>-->
-<!--                <configuration>-->
-<!--                    <mainClass>ate.Main</mainClass>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
+            <plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.3</version>
+                <configuration>
+                    <mainClass>ate.Main</mainClass>
+                    <workingDirectory>PointInPolygonJAR</workingDirectory>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>
