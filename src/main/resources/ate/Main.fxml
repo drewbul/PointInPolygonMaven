@@ -36,8 +36,8 @@
     <Button fx:id="btnNewPolygon" layoutX="5" layoutY="155" text="New polygon" style="-fx-background-color:#aaffaa;"
             prefWidth="110" prefHeight="50" onAction="#butNewPolygonOnAction"/>
 
-    <TextField fx:id="xCoord"  layoutX="5" layoutY="215" prefWidth="53" prefHeight="30" onAction="#xCoordOnAction" />
-    <TextField fx:id="yCoord"  layoutX="62" layoutY="215" prefWidth="53" prefHeight="30" onAction="#yCoordOnAction" />
+    <TextField fx:id="xCoord"  layoutX="5" layoutY="215" prefWidth="53" prefHeight="30" onAction="#xCoordOnAction" promptText="X coord" />
+    <TextField fx:id="yCoord"  layoutX="62" layoutY="215" prefWidth="53" prefHeight="30" onAction="#yCoordOnAction" promptText="Y coord" />
 
     <Button fx:id="addVertex" layoutX="5" layoutY="250" text="Add vertex" style="-fx-background-color:#F8FFAD;"
             prefWidth="110" prefHeight="30" onAction="#butAddVertexOnAction"/>
