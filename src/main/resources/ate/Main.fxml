@@ -7,6 +7,7 @@
 <?import javafx.scene.Group?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
 <?import ate.HelperLine?>
 <?import java.lang.String?>
 
@@ -34,7 +35,15 @@
             style="-fx-background-color:#28b7ff;" prefWidth="110" prefHeight="50" onAction="#btnFinishSettingOnAction"/>
     <Button fx:id="btnNewPolygon" layoutX="5" layoutY="155" text="New polygon" style="-fx-background-color:#aaffaa;"
             prefWidth="110" prefHeight="50" onAction="#butNewPolygonOnAction"/>
-    <ListView fx:id="vertCoordListView" layoutX="5" layoutY="215" style="-fx-background-color:#f2f2f2;"
+
+    <TextField fx:id="xCoord"  layoutX="5" layoutY="215" prefWidth="53" prefHeight="30" onAction="#xCoordOnAction" />
+    <TextField fx:id="yCoord"  layoutX="62" layoutY="215" prefWidth="53" prefHeight="30" onAction="#yCoordOnAction" />
+
+    <Button fx:id="addVertex" layoutX="5" layoutY="250" text="Add vertex" style="-fx-background-color:#F8FFAD;"
+            prefWidth="110" prefHeight="30" onAction="#butAddVertexOnAction"/>
+
+
+    <ListView fx:id="vertCoordListView" layoutX="5" layoutY="290" style="-fx-background-color:#f2f2f2;"
               onMouseClicked="#vertCoordListViewOnMouseClicked"/>
     <Pane fx:id="drawingPane" layoutX="120" layoutY="35" style="-fx-background-color:#fafafa;"
           onMouseClicked="#drawingPaneOnClick" onMouseMoved="#drawingPaneOnMouseMoveOrDrag" onMouseDragged="#drawingPaneOnMouseMoveOrDrag" onMouseExited="#drawingPaneOnMouseExited" onMouseEntered="#drawingPaneOnMouseEntered">
@@ -42,6 +51,12 @@
         <Group fx:id="polygonSides" />
         <Circle fx:id="testedPointCircle" visible="false" radius="3"/>
         <HelperLine fx:id="helperLine" visible="false" />
+        <Line fx:id="xAxis" startX="10" endX="1780" startY="955" endY="955" style="-fx-stroke: blue;" />
+        <Line fx:id="xAxisArrow1" startX="1770" endX="1780" startY="950" endY="955" style="-fx-stroke: blue;" />
+        <Line fx:id="xAxisArrow2" startX="1770" endX="1780" startY="960" endY="955" style="-fx-stroke: blue;" />
+        <Line fx:id="yAxis" startX="20" endX="20" startY="965" endY="10" style="-fx-stroke: blue;" />
+        <Line fx:id="yAxisArrow1" startX="15" endX="20" startY="20" endY="10" style="-fx-stroke: blue;" />
+        <Line fx:id="yAxisArrow2" startX="25" endX="20" startY="20" endY="10" style="-fx-stroke: blue;" />
     </Pane>
 
  </Group>

@@ -6,9 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Group;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -46,6 +44,15 @@ public class MainController {
     private Circle testedPointCircle;
     @FXML
     private HelperLine helperLine;
+
+    @FXML
+    private TextField xCoord;
+    @FXML
+    private TextField yCoord;
+    @FXML
+    private Button addVertex;
+
+
 //    @FXML
 //    private Button btnFinishSetting;
 //    @FXML
@@ -80,7 +87,9 @@ public class MainController {
         double screenWidth =  primaryScreenBounds.getWidth();
         int WINDOW_TITLE_BAR_HEIGHT = 35;
         vertCoordListView.setPrefSize(110, screenHeight - vertCoordListView.getLayoutY() - WINDOW_TITLE_BAR_HEIGHT);
-        drawingPane.setPrefSize(screenWidth - drawingPane.getLayoutX() - 5, screenHeight - drawingPane.getLayoutY() - WINDOW_TITLE_BAR_HEIGHT);
+        double drawingPaneWidth = screenWidth - drawingPane.getLayoutX() - 5;
+        double drawingPaneHeight = screenHeight - drawingPane.getLayoutY() - WINDOW_TITLE_BAR_HEIGHT;
+        drawingPane.setPrefSize( drawingPaneWidth, drawingPaneHeight);
         vertCoordListView.setItems(vertCoords);
         Main.myVoice.setLang("English");
         msgSoundFilesNotLoaded.setVisible(Main.myVoice.skipVoice);
@@ -122,11 +131,12 @@ public class MainController {
     private void btnFinishSettingOnAction(ActionEvent event){
         if ( vertices.size()>=3 ) {
             if (!ifTestingPointsNow){
-                Line polygonSide = new Line (prevVertex.x, prevVertex.y, vertices.get(0).x, vertices.get(0).y);
+                Line polygonSide = new Line (20 + prevVertex.x/4, 955 - prevVertex.y/4, 20 + vertices.get(0).x/4, 955 - vertices.get(0).y/4);
                 polygonSide.setFill(Color.BLACK);
                 polygonSides.getChildren().add(polygonSide);
                 ifTestingPointsNow = true;
                 helperLine.setActive(false);
+                addVertex.setText("Check point");
             }
             lblMessage.setText("Now you can specify the point to be tested." );
         } else {
@@ -144,15 +154,16 @@ public class MainController {
         testedPointCircle.setVisible(false);
         vertCoords.clear();
         helperLine.setActive(false);
+        addVertex.setText("Add vertex");
     }
 
     @FXML
     private void drawingPaneOnMouseMoveOrDrag(MouseEvent event) {
-        double mouseX = event.getX();
-        double mouseY = event.getY();
+        double mouseX = (event.getX() - 20)*4 ;
+        double mouseY = (955 - event.getY())*4;
         lblMouseCoordinates.setText((int) mouseX + " x " + (int) mouseY);
         if (!ifTestingPointsNow) {
-            helperLine.setEndXY(mouseX, mouseY);
+            helperLine.setEndXY(20 + mouseX/4, 955 - mouseY/4 );
         }
     }
 
@@ -167,15 +178,41 @@ public class MainController {
     }
 
     @FXML
+    private void butAddVertexOnAction(ActionEvent event){
+        AddVertexOrCheckPoint();
+    }
+
+    @FXML
+    private void xCoordOnAction(ActionEvent event){
+        AddVertexOrCheckPoint();
+    }
+
+    @FXML
+    private void yCoordOnAction(ActionEvent event){
+        AddVertexOrCheckPoint();
+    }
+
+    private void AddVertexOrCheckPoint() {
+        Point clickedPoint = new Point();
+        clickedPoint.x = Double.valueOf( xCoord.getText() );
+        clickedPoint.y = Double.valueOf( yCoord.getText() );
+        processClickedPoint(clickedPoint);
+    }
+
+    @FXML
     private void drawingPaneOnClick(MouseEvent event) {
         Point clickedPoint = new Point();
-        clickedPoint.x = event.getX();
-        clickedPoint.y = event.getY();
+        clickedPoint.x = (event.getX() - 20)*4;
+        clickedPoint.y = (955 - event.getY())*4;
+        processClickedPoint(clickedPoint);
+    }
+
+    private void processClickedPoint(Point clickedPoint) {
         String pointCoordinates = (int) clickedPoint.x + " x " + (int) clickedPoint.y;
         if (ifTestingPointsNow){
             Main.myVoice.stop();
-            testedPointCircle.setCenterX(clickedPoint.x);
-            testedPointCircle.setCenterY(clickedPoint.y);
+            testedPointCircle.setCenterX(20 + clickedPoint.x/4);
+            testedPointCircle.setCenterY(955 - clickedPoint.y/4 );
             testedPointCircle.setVisible(true);
             boolean isInside = isPointInPolygon(vertices, clickedPoint);
             Main.myVoice.play(isInside);
@@ -187,20 +224,20 @@ public class MainController {
             lblMessage.setText("Added vertex with these coordinates: " + pointCoordinates);
             vertCoords.add(pointCoordinates);
             Circle vertexCircle = new Circle();
-            vertexCircle.setCenterX(clickedPoint.x);
-            vertexCircle.setCenterY(clickedPoint.y);
+            vertexCircle.setCenterX(20 + clickedPoint.x/4);
+            vertexCircle.setCenterY(955 - clickedPoint.y/4);
             vertexCircle.setRadius(2.0f);
             vertexCircle.setFill(Color.BLACK);
             polygonVertices.getChildren().add(vertexCircle);
             if (vertices.size() > 1) {
-                Line polygonSide = new Line(prevVertex.x, prevVertex.y, clickedPoint.x, clickedPoint.y);
+                Line polygonSide = new Line(20 + prevVertex.x/4, 955 - prevVertex.y/4, 20 + clickedPoint.x/4, 955 - clickedPoint.y/4);
                 polygonSide.setFill(Color.BLACK);
                 polygonSides.getChildren().add(polygonSide);
             }
             prevVertex.x = clickedPoint.x;
             prevVertex.y = clickedPoint.y;
-            helperLine.setStartXY(clickedPoint.x, clickedPoint.y);
-            helperLine.setEndXY(clickedPoint.x, clickedPoint.y);
+            helperLine.setStartXY(20 + clickedPoint.x/4, 955 - clickedPoint.y/4);
+            helperLine.setEndXY(20 + clickedPoint.x/4, 955 - clickedPoint.y/4);
             helperLine.setActive(true);
         }
     }
