@@ -30,6 +30,12 @@ public class MainController {
     private Label msgSoundFilesNotLoaded;
     @FXML
     private ComboBox<String> langCombobox;
+
+    @FXML
+    private TextField xMultiplierField;
+    @FXML
+    private TextField yMultiplierField;
+
     @FXML
     private Label lblMessage;
     @FXML
@@ -52,12 +58,13 @@ public class MainController {
     @FXML
     private Button addVertex;
 
+    @FXML
+    private Button btnFinishSetting;
+    @FXML
+    private Button btnNewPolygon;
 
-//    @FXML
-//    private Button btnFinishSetting;
-//    @FXML
-//    private Button butNewPolygon;
-
+    private double xMultiplierValue = 1.0;
+    private double yMultiplierValue = 4.0;
     private boolean ifTestingPointsNow;
     final static int LIST_ITEM_NOT_SELECTED=-1;
     private static int prevSelectedVertex=LIST_ITEM_NOT_SELECTED;
@@ -131,12 +138,13 @@ public class MainController {
     private void btnFinishSettingOnAction(ActionEvent event){
         if ( vertices.size()>=3 ) {
             if (!ifTestingPointsNow){
-                Line polygonSide = new Line (20 + prevVertex.x/4, 955 - prevVertex.y/4, 20 + vertices.get(0).x/4, 955 - vertices.get(0).y/4);
+                Line polygonSide = new Line (20 + prevVertex.x, 955 - prevVertex.y/yMultiplierValue, 20 + vertices.get(0).x, 955 - vertices.get(0).y/yMultiplierValue);
                 polygonSide.setFill(Color.BLACK);
                 polygonSides.getChildren().add(polygonSide);
                 ifTestingPointsNow = true;
                 helperLine.setActive(false);
                 addVertex.setText("Check point");
+                btnFinishSetting.setVisible(false);
             }
             lblMessage.setText("Now you can specify the point to be tested." );
         } else {
@@ -155,15 +163,19 @@ public class MainController {
         vertCoords.clear();
         helperLine.setActive(false);
         addVertex.setText("Add vertex");
+        btnFinishSetting.setVisible(false);
+        btnNewPolygon.setVisible(false);
+        xMultiplierValue = Double.parseDouble( xMultiplierField.getText() );
+        yMultiplierValue = Double.parseDouble( yMultiplierField.getText() );
     }
 
     @FXML
     private void drawingPaneOnMouseMoveOrDrag(MouseEvent event) {
-        double mouseX = (event.getX() - 20)*4 ;
-        double mouseY = (955 - event.getY())*4;
+        double mouseX = (event.getX() - 20) * xMultiplierValue;
+        double mouseY = (955 - event.getY()) * yMultiplierValue;
         lblMouseCoordinates.setText((int) mouseX + " x " + (int) mouseY);
         if (!ifTestingPointsNow) {
-            helperLine.setEndXY(20 + mouseX/4, 955 - mouseY/4 );
+            helperLine.setEndXY(20 + mouseX / xMultiplierValue, 955 - mouseY / yMultiplierValue );
         }
     }
 
@@ -194,16 +206,16 @@ public class MainController {
 
     private void AddVertexOrCheckPoint() {
         Point clickedPoint = new Point();
-        clickedPoint.x = Double.valueOf( xCoord.getText() );
-        clickedPoint.y = Double.valueOf( yCoord.getText() );
+        clickedPoint.x = Double.parseDouble( xCoord.getText() );
+        clickedPoint.y = Double.parseDouble( yCoord.getText() );
         processClickedPoint(clickedPoint);
     }
 
     @FXML
     private void drawingPaneOnClick(MouseEvent event) {
         Point clickedPoint = new Point();
-        clickedPoint.x = (event.getX() - 20)*4;
-        clickedPoint.y = (955 - event.getY())*4;
+        clickedPoint.x = (event.getX() - 20) * xMultiplierValue;
+        clickedPoint.y = (955 - event.getY()) * yMultiplierValue;
         processClickedPoint(clickedPoint);
     }
 
@@ -211,8 +223,8 @@ public class MainController {
         String pointCoordinates = (int) clickedPoint.x + " x " + (int) clickedPoint.y;
         if (ifTestingPointsNow){
             Main.myVoice.stop();
-            testedPointCircle.setCenterX(20 + clickedPoint.x/4);
-            testedPointCircle.setCenterY(955 - clickedPoint.y/4 );
+            testedPointCircle.setCenterX(20 + clickedPoint.x / xMultiplierValue );
+            testedPointCircle.setCenterY(955 - clickedPoint.y / yMultiplierValue );
             testedPointCircle.setVisible(true);
             boolean isInside = isPointInPolygon(vertices, clickedPoint);
             Main.myVoice.play(isInside);
@@ -220,24 +232,26 @@ public class MainController {
             lblMessage.setText("The point " + pointCoordinates + " is " + (isInside ? "inside" : "outside") + " the polygon." );
         }
         else { //if setting vertices now
+            btnFinishSetting.setVisible(true);
+            btnNewPolygon.setVisible(true);
             vertices.add(clickedPoint);
             lblMessage.setText("Added vertex with these coordinates: " + pointCoordinates);
             vertCoords.add(pointCoordinates);
             Circle vertexCircle = new Circle();
-            vertexCircle.setCenterX(20 + clickedPoint.x/4);
-            vertexCircle.setCenterY(955 - clickedPoint.y/4);
+            vertexCircle.setCenterX(20 + clickedPoint.x / xMultiplierValue);
+            vertexCircle.setCenterY(955 - clickedPoint.y / yMultiplierValue);
             vertexCircle.setRadius(2.0f);
             vertexCircle.setFill(Color.BLACK);
             polygonVertices.getChildren().add(vertexCircle);
             if (vertices.size() > 1) {
-                Line polygonSide = new Line(20 + prevVertex.x/4, 955 - prevVertex.y/4, 20 + clickedPoint.x/4, 955 - clickedPoint.y/4);
+                Line polygonSide = new Line(20 + prevVertex.x / xMultiplierValue, 955 - prevVertex.y / yMultiplierValue, 20 + clickedPoint.x / xMultiplierValue, 955 - clickedPoint.y / yMultiplierValue);
                 polygonSide.setFill(Color.BLACK);
                 polygonSides.getChildren().add(polygonSide);
             }
             prevVertex.x = clickedPoint.x;
             prevVertex.y = clickedPoint.y;
-            helperLine.setStartXY(20 + clickedPoint.x/4, 955 - clickedPoint.y/4);
-            helperLine.setEndXY(20 + clickedPoint.x/4, 955 - clickedPoint.y/4);
+            helperLine.setStartXY(20 + clickedPoint.x / xMultiplierValue, 955 - clickedPoint.y / yMultiplierValue);
+            helperLine.setEndXY(20 + clickedPoint.x / xMultiplierValue, 955 - clickedPoint.y / yMultiplierValue);
             helperLine.setActive(true);
         }
     }

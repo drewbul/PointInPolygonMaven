@@ -31,19 +31,23 @@
 
     <Label fx:id="lblMessage" layoutX="120" layoutY="10"
            text="Set the vertices of the polygon with mouse clicks. Use 'Finish setting' button to close the polygon."/>
-    <Button fx:id="btnFinishSetting" layoutX="5" layoutY="95" text="Finish setting"
-            style="-fx-background-color:#28b7ff;" prefWidth="110" prefHeight="50" onAction="#btnFinishSettingOnAction"/>
-    <Button fx:id="btnNewPolygon" layoutX="5" layoutY="155" text="New polygon" style="-fx-background-color:#aaffaa;"
-            prefWidth="110" prefHeight="50" onAction="#butNewPolygonOnAction"/>
 
-    <TextField fx:id="xCoord"  layoutX="5" layoutY="215" prefWidth="53" prefHeight="30" onAction="#xCoordOnAction" promptText="X coord" />
-    <TextField fx:id="yCoord"  layoutX="62" layoutY="215" prefWidth="53" prefHeight="30" onAction="#yCoordOnAction" promptText="Y coord" />
+    <TextField fx:id="xMultiplierField"  layoutX="5" layoutY="90" prefWidth="53" prefHeight="25"  promptText=" * X" text="1" />
+    <TextField fx:id="yMultiplierField"  layoutX="62" layoutY="90" prefWidth="53" prefHeight="25" promptText=" * Y" text="4" />
 
-    <Button fx:id="addVertex" layoutX="5" layoutY="250" text="Add vertex" style="-fx-background-color:#F8FFAD;"
+    <Button fx:id="btnFinishSetting" layoutX="5" layoutY="125" text="Finish setting"
+            style="-fx-background-color:#28b7ff;" prefWidth="110" prefHeight="50" onAction="#btnFinishSettingOnAction" visible="false" />
+    <Button fx:id="btnNewPolygon" layoutX="5" layoutY="185" text="New polygon" style="-fx-background-color:#aaffaa;"
+            prefWidth="110" prefHeight="50" onAction="#butNewPolygonOnAction" visible="false" />
+
+    <TextField fx:id="xCoord"  layoutX="5" layoutY="245" prefWidth="53" prefHeight="30" onAction="#xCoordOnAction" promptText="X coord" />
+    <TextField fx:id="yCoord"  layoutX="62" layoutY="245" prefWidth="53" prefHeight="30" onAction="#yCoordOnAction" promptText="Y coord" />
+
+    <Button fx:id="addVertex" layoutX="5" layoutY="280" text="Add vertex" style="-fx-background-color:#F8FFAD;"
             prefWidth="110" prefHeight="30" onAction="#butAddVertexOnAction"/>
 
 
-    <ListView fx:id="vertCoordListView" layoutX="5" layoutY="290" style="-fx-background-color:#f2f2f2;"
+    <ListView fx:id="vertCoordListView" layoutX="5" layoutY="320" style="-fx-background-color:#f2f2f2;"
               onMouseClicked="#vertCoordListViewOnMouseClicked"/>
     <Pane fx:id="drawingPane" layoutX="120" layoutY="35" style="-fx-background-color:#fafafa;"
           onMouseClicked="#drawingPaneOnClick" onMouseMoved="#drawingPaneOnMouseMoveOrDrag" onMouseDragged="#drawingPaneOnMouseMoveOrDrag" onMouseExited="#drawingPaneOnMouseExited" onMouseEntered="#drawingPaneOnMouseEntered">
