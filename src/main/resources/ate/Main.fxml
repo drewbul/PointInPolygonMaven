@@ -55,12 +55,12 @@
         <Group fx:id="polygonSides" />
         <Circle fx:id="testedPointCircle" visible="false" radius="3"/>
         <HelperLine fx:id="helperLine" visible="false" />
-        <Line fx:id="xAxis" startX="10" endX="1780" startY="955" endY="955" style="-fx-stroke: blue;" />
-        <Line fx:id="xAxisArrow1" startX="1770" endX="1780" startY="950" endY="955" style="-fx-stroke: blue;" />
-        <Line fx:id="xAxisArrow2" startX="1770" endX="1780" startY="960" endY="955" style="-fx-stroke: blue;" />
-        <Line fx:id="yAxis" startX="20" endX="20" startY="965" endY="10" style="-fx-stroke: blue;" />
-        <Line fx:id="yAxisArrow1" startX="15" endX="20" startY="20" endY="10" style="-fx-stroke: blue;" />
-        <Line fx:id="yAxisArrow2" startX="25" endX="20" startY="20" endY="10" style="-fx-stroke: blue;" />
+        <Line fx:id="xAxis" style="-fx-stroke: blue;" />
+        <Line fx:id="yAxis" style="-fx-stroke: blue;" />
+        <Line fx:id="xAxisArrow1" style="-fx-stroke: blue;" />
+        <Line fx:id="xAxisArrow2" style="-fx-stroke: blue;" />
+        <Line fx:id="yAxisArrow1" style="-fx-stroke: blue;" />
+        <Line fx:id="yAxisArrow2" style="-fx-stroke: blue;" />
     </Pane>
 
  </Group>

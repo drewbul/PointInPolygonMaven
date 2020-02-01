@@ -63,8 +63,24 @@ public class MainController {
     @FXML
     private Button btnNewPolygon;
 
+    @FXML
+    private Line xAxis;
+    @FXML
+    private Line yAxis;
+    @FXML
+    private Line xAxisArrow1;
+    @FXML
+    private Line xAxisArrow2;
+    @FXML
+    private Line yAxisArrow1;
+    @FXML
+    private Line yAxisArrow2;
+
     private double xMultiplierValue = 1.0;
     private double yMultiplierValue = 4.0;
+    private double originX;
+    private double originY;
+
     private boolean ifTestingPointsNow;
     final static int LIST_ITEM_NOT_SELECTED=-1;
     private static int prevSelectedVertex=LIST_ITEM_NOT_SELECTED;
@@ -97,6 +113,36 @@ public class MainController {
         double drawingPaneWidth = screenWidth - drawingPane.getLayoutX() - 5;
         double drawingPaneHeight = screenHeight - drawingPane.getLayoutY() - WINDOW_TITLE_BAR_HEIGHT;
         drawingPane.setPrefSize( drawingPaneWidth, drawingPaneHeight);
+
+        originX = 20;
+        originY = drawingPaneHeight - 20;
+        xAxis.setStartX(10);
+        xAxis.setStartY(originY);
+        xAxis.setEndX(drawingPaneWidth - 20);
+        xAxis.setEndY(originY);
+        yAxis.setStartX(originX);
+        yAxis.setStartY(drawingPaneHeight - 10);
+        yAxis.setEndX(originX);
+        yAxis.setEndY(10);
+
+        xAxisArrow1.setStartX(xAxis.getEndX() - 10);
+        xAxisArrow1.setStartY(xAxis.getEndY() - 5);
+        xAxisArrow1.setEndX(xAxis.getEndX());
+        xAxisArrow1.setEndY(xAxis.getEndY());
+        xAxisArrow2.setStartX(xAxis.getEndX() - 10);
+        xAxisArrow2.setStartY(xAxis.getEndY() + 5);
+        xAxisArrow2.setEndX(xAxis.getEndX());
+        xAxisArrow2.setEndY(xAxis.getEndY());
+
+        yAxisArrow1.setStartX(yAxis.getEndX() - 5);
+        yAxisArrow1.setStartY(yAxis.getEndY() + 10);
+        yAxisArrow1.setEndX(yAxis.getEndX());
+        yAxisArrow1.setEndY(yAxis.getEndY());
+        yAxisArrow2.setStartX(yAxis.getEndX() + 5);
+        yAxisArrow2.setStartY(yAxis.getEndY() + 10);
+        yAxisArrow2.setEndX(yAxis.getEndX());
+        yAxisArrow2.setEndY(yAxis.getEndY());
+
         vertCoordListView.setItems(vertCoords);
         Main.myVoice.setLang("English");
         msgSoundFilesNotLoaded.setVisible(Main.myVoice.skipVoice);
@@ -138,7 +184,8 @@ public class MainController {
     private void btnFinishSettingOnAction(ActionEvent event){
         if ( vertices.size()>=3 ) {
             if (!ifTestingPointsNow){
-                Line polygonSide = new Line (20 + prevVertex.x, 955 - prevVertex.y/yMultiplierValue, 20 + vertices.get(0).x, 955 - vertices.get(0).y/yMultiplierValue);
+                Line polygonSide = new Line (originX + prevVertex.x / xMultiplierValue, originY - prevVertex.y / yMultiplierValue,
+                                            originX + vertices.get(0).x / xMultiplierValue, originY - vertices.get(0).y / yMultiplierValue);
                 polygonSide.setFill(Color.BLACK);
                 polygonSides.getChildren().add(polygonSide);
                 ifTestingPointsNow = true;
@@ -171,11 +218,11 @@ public class MainController {
 
     @FXML
     private void drawingPaneOnMouseMoveOrDrag(MouseEvent event) {
-        double mouseX = (event.getX() - 20) * xMultiplierValue;
-        double mouseY = (955 - event.getY()) * yMultiplierValue;
+        double mouseX = (event.getX() - originX) * xMultiplierValue;
+        double mouseY = (originY - event.getY()) * yMultiplierValue;
         lblMouseCoordinates.setText((int) mouseX + " x " + (int) mouseY);
         if (!ifTestingPointsNow) {
-            helperLine.setEndXY(20 + mouseX / xMultiplierValue, 955 - mouseY / yMultiplierValue );
+            helperLine.setEndXY(originX + mouseX / xMultiplierValue, originY - mouseY / yMultiplierValue );
         }
     }
 
@@ -214,8 +261,8 @@ public class MainController {
     @FXML
     private void drawingPaneOnClick(MouseEvent event) {
         Point clickedPoint = new Point();
-        clickedPoint.x = (event.getX() - 20) * xMultiplierValue;
-        clickedPoint.y = (955 - event.getY()) * yMultiplierValue;
+        clickedPoint.x = (event.getX() - originX) * xMultiplierValue;
+        clickedPoint.y = (originY - event.getY()) * yMultiplierValue;
         processClickedPoint(clickedPoint);
     }
 
@@ -223,8 +270,8 @@ public class MainController {
         String pointCoordinates = (int) clickedPoint.x + " x " + (int) clickedPoint.y;
         if (ifTestingPointsNow){
             Main.myVoice.stop();
-            testedPointCircle.setCenterX(20 + clickedPoint.x / xMultiplierValue );
-            testedPointCircle.setCenterY(955 - clickedPoint.y / yMultiplierValue );
+            testedPointCircle.setCenterX(originX + clickedPoint.x / xMultiplierValue );
+            testedPointCircle.setCenterY(originY - clickedPoint.y / yMultiplierValue );
             testedPointCircle.setVisible(true);
             boolean isInside = isPointInPolygon(vertices, clickedPoint);
             Main.myVoice.play(isInside);
@@ -238,20 +285,21 @@ public class MainController {
             lblMessage.setText("Added vertex with these coordinates: " + pointCoordinates);
             vertCoords.add(pointCoordinates);
             Circle vertexCircle = new Circle();
-            vertexCircle.setCenterX(20 + clickedPoint.x / xMultiplierValue);
-            vertexCircle.setCenterY(955 - clickedPoint.y / yMultiplierValue);
+            vertexCircle.setCenterX(originX + clickedPoint.x / xMultiplierValue);
+            vertexCircle.setCenterY(originY - clickedPoint.y / yMultiplierValue);
             vertexCircle.setRadius(2.0f);
             vertexCircle.setFill(Color.BLACK);
             polygonVertices.getChildren().add(vertexCircle);
             if (vertices.size() > 1) {
-                Line polygonSide = new Line(20 + prevVertex.x / xMultiplierValue, 955 - prevVertex.y / yMultiplierValue, 20 + clickedPoint.x / xMultiplierValue, 955 - clickedPoint.y / yMultiplierValue);
+                Line polygonSide = new Line(originX + prevVertex.x / xMultiplierValue, originY - prevVertex.y / yMultiplierValue,
+                                           originX + clickedPoint.x / xMultiplierValue, originY - clickedPoint.y / yMultiplierValue);
                 polygonSide.setFill(Color.BLACK);
                 polygonSides.getChildren().add(polygonSide);
             }
             prevVertex.x = clickedPoint.x;
             prevVertex.y = clickedPoint.y;
-            helperLine.setStartXY(20 + clickedPoint.x / xMultiplierValue, 955 - clickedPoint.y / yMultiplierValue);
-            helperLine.setEndXY(20 + clickedPoint.x / xMultiplierValue, 955 - clickedPoint.y / yMultiplierValue);
+            helperLine.setStartXY(originX + clickedPoint.x / xMultiplierValue, originY - clickedPoint.y / yMultiplierValue);
+            helperLine.setEndXY(originX + clickedPoint.x / xMultiplierValue, originY - clickedPoint.y / yMultiplierValue);
             helperLine.setActive(true);
         }
     }
