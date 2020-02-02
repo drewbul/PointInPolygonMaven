@@ -147,6 +147,27 @@ public class MainController {
         Main.myVoice.setLang("English");
         msgSoundFilesNotLoaded.setVisible(Main.myVoice.skipVoice);
         langCombobox.setPrefHeight(Main.myVoice.skipVoice ? 25 : 50);
+
+        xMultiplierField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d{0,2}([.]\\d{0,1})?")) {
+                xMultiplierField.setText(oldValue);
+            }
+        });
+        yMultiplierField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d{0,2}([.]\\d{0,1})?")) {
+                yMultiplierField.setText(oldValue);
+            }
+        });
+        xCoord.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d{0,4}")) {
+                xCoord.setText(oldValue);
+            }
+        });
+        yCoord.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d{0,4}")) {
+                yCoord.setText(oldValue);
+            }
+        });
     }
 
     @FXML
