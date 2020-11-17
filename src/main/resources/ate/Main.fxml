@@ -53,7 +53,7 @@
           onMouseClicked="#drawingPaneOnClick" onMouseMoved="#drawingPaneOnMouseMoveOrDrag" onMouseDragged="#drawingPaneOnMouseMoveOrDrag" onMouseExited="#drawingPaneOnMouseExited" onMouseEntered="#drawingPaneOnMouseEntered">
         <Group fx:id="polygonVertices" />
         <Group fx:id="polygonSides" />
-        <Circle fx:id="testedPointCircle" visible="false" radius="3"/>
+        <Circle fx:id="testedPointCircle" visible="false" radius="5"/>
         <HelperLine fx:id="helperLine" visible="false" />
         <Line fx:id="xAxis" style="-fx-stroke: blue;" />
         <Line fx:id="yAxis" style="-fx-stroke: blue;" />
