@@ -2,7 +2,7 @@
 
 The project illustrates the [algorithm described by W. Randolph Franklin](https://wrf.ecse.rpi.edu/Research/Short_Notes/pnpoly.html).
 
-See [this article](http://ate.org.ua/en/how-a-heatpump-task-grew-into-math-game-in-java/) for more details.
+See [this article](https://a-t-engineering.com/en/how-a-heatpump-task-grew-into-math-game-in-java/) for more details.
 
 ## Getting Started
 
