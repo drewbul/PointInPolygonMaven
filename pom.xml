@@ -8,27 +8,26 @@
     <artifactId>PointInPolygonMaven</artifactId>
     <version>1.0</version>
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-<!--        Uncomment these lines if you want to compile the project for openjfx11-->
         <dependencies>
             <dependency>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-controls</artifactId>
-                <version>11.0.2</version>
+                <version>17</version>
             </dependency>
             <dependency>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-media</artifactId>
-                <version>11.0.2</version>
+                <version>17</version>
             </dependency>
             <dependency>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-fxml</artifactId>
-                <version>11.0.2</version>
+                <version>17</version>
             </dependency>
         </dependencies>
 
@@ -38,7 +37,7 @@
                 <!-- Build an executable JAR -->
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.1.0</version>
+                <version>3.3.0</version>
                 <configuration>
                     <outputDirectory>PointInPolygonJAR</outputDirectory>
                     <archive>
@@ -50,7 +49,6 @@
                 </configuration>
             </plugin>
 
-<!--    Uncomment these lines if you want to compile the project for openjfx11 or later-->
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
