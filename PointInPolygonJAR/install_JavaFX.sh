@@ -1,9 +1,13 @@
 #!/bin/sh
 
-wget https://download2.gluonhq.com/openjfx/20.0.2/openjfx-20.0.2_linux-x64_bin-sdk.zip -O ~/Downloads/openjfx-sdk.zip
-sudo unzip ~/Downloads/openjfx-sdk.zip -d /usr/share/
-rm ~/Downloads/openjfx-sdk.zip
-sudo mv /usr/share/javafx-sdk-20.0.2/ /usr/share/openjfx/
+sudo apt install openjfx
+
+# Sources may not be installed in the above method, so you can also install OpenJFX manually by uncomment the following lines:
+
+#wget https://download2.gluonhq.com/openjfx/20.0.2/openjfx-20.0.2_linux-x64_bin-sdk.zip -O ~/Downloads/openjfx-sdk.zip
+#sudo unzip ~/Downloads/openjfx-sdk.zip -d /usr/share/
+#rm ~/Downloads/openjfx-sdk.zip
+#sudo mv /usr/share/javafx-sdk-20.0.2/ /usr/share/openjfx/
 
 
 echo '
