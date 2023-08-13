@@ -16,6 +16,8 @@ The project was developed using Java SE 8 and Java FX, so you will need the resp
 
 You can run this program under Windows, Linux and MacOS. You can record your voice and replace the WAV files. You can also replace MP3 files and edit the input parameter in the start.bat file, but the appropriate codecs must be installed in your operating system (in Ubuntu 18, by default they were missing).
 
+Java FX was removed from JDK starting with version 11, so if you want to use JDK 11 or a later version then you will need to install JavaFX additionally -- see install_JavaFX.sh for Linux.
+
 ## Source code
 You can change certain parameters like the color, size and position of elements. That kind of GUI changes can be done without recompiling the source code, by modifying the file Main.fxml inside the JAR archive.
 
@@ -23,7 +25,6 @@ If you want to change the source code beyond the GUI parameters, you need to ins
 ```shell script
 mvn install
 ```
-Java FX was removed from JDK starting with version 11, so if you want to use JDK 11 or a later version then you will need to uncomment the lines in pom.xml.
 
 ## Authors
 
